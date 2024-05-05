@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ResQMeal</title>
+    <script src="script.js" defer></script>
+    <script src="scanner.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/quagga/dist/quagga.min.js"></script>
+  </head>
+  <body>
+    <h1>Recherche de produit</h1>
+
+    <!-- Champ de saisie pour le code-barres -->
+    <label for="barcode-input">Code-barres :</label>
+    <input type="text" id="barcode-input" placeholder="Entrez le code-barres" />
+
+    <!-- Bouton de recherche -->
+    <button id="search-button">Rechercher</button>
+
+    <!-- Zone pour afficher les informations sur le produit -->
+    <div id="product-info"></div>
+    <div id="interactive" class="viewport"></div>
+    <div id="barcode-result"></div>
+  </body>
+</html>
