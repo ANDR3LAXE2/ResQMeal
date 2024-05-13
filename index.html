@@ -22,5 +22,27 @@
     <div id="product-info"></div>
     <div id="interactive" class="viewport"></div>
     <div id="barcode-result"></div>
+
+    <h1>Ajout de produits via texte</h1>
+
+    <label for="name-input">Nom de l'aliment</label>
+    <input
+      type="text"
+      id="name-input"
+      placeholder="Entrez le nome de l'aliment"
+    />
+    <button id="add-aliment-name">Ajouter</button>
+
+    <div id="ingredients"></div>
+
+    <script>
+      fetch("http://localhost:3000/ingredients")
+        .then((response) => response.json())
+        .then((data) => {
+          document.getElementById("ingredients").innerText =
+            JSON.stringify(data);
+        })
+        .catch((error) => console.error("Erreur:", error));
+    </script>
   </body>
 </html>

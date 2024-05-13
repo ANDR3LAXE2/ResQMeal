@@ -5,6 +5,7 @@ const apiURL = "https://world.openfoodfacts.org/api/v2/product/";
 const barcode = "3263852913714"; // Exemple de code-barres
 
 const search_button = document.getElementById("search-button");
+const add_aliment_name = document.getElementById("add-aliment-name");
 const product_info = document.getElementById("product-info");
 
 search_button.addEventListener("click", function () {
@@ -36,22 +37,7 @@ function display_product_info(product) {
   `;
 }
 
-/*
-// Effectuer une requête GET à l'API Open Food Facts
-fetch(apiURL + barcode)
-  .then((response) => {
-    // Vérifier si la requête a réussi (status code 200)
-    if (response.ok) {
-      // Extraire les données JSON de la réponse
-      return response.json();
-    }
-    throw new Error("Network response was not ok.");
-  })
-  .then((data) => {
-    // Afficher les données dans la console
-    console.log(data);
-  })
-  .catch((error) => {
-    // Gérer les erreurs de requête
-    console.error("There was a problem with your fetch operation:", error);
-  });*/
+add_aliment_name.addEventListener("click", function () {
+  const user_name_product = document.getElementById("name-input").value;
+  console.log(user_name_product);
+});
