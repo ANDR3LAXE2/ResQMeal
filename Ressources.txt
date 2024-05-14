@@ -14,6 +14,7 @@ TODO:
 GUIDE POUR LES NOOBS
 
 - télécharger npm et node 
+- aller dans le dossier de votre projet sur VSCODE et ouvrir un termianl
 - faire "npm install" dans le terminal si ça marche pas "npm install cors dotenv express mysql2 nodemon"
 - aller sur mysql workbench et copier coller le code suivant dans une nouvelle base de donnée nommée "resqmeal_db":
 CREATE TABLE Ingrédients(
@@ -38,6 +39,7 @@ CREATE TABLE Contient(
 
 INSERT INTO Ingrédients (id_aliment, nom_aliment) VALUES
 ("1", "pomme"), ("2", "poire");
+ALTER TABLE Recettes ADD description_recette text;
 - créer un fichier nommé ".env" et le remplire de la manière suivante:
 # .env file
 DB_HOST=localhost
