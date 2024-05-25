@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Groceries - ResQMeal</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/groceries.css">
+    <script src="../js/groceries.js" defer></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="index.html"><img src="../images/logo_light.png" alt="ResQMeal Logo" class="logo"></a>
+                <img src="../images/logo_name_white.png" alt="ResQMeal Logo Name" class="logo-name">
+                <ul class="nav-right">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main class="groceries-container">
+        <section class="introduction">
+            <h1>Groceries</h1>
+            <p>Manage your grocery list easily. Add items you need to buy and keep track of your shopping list.</p>
+        </section>
+        <section class="grocery-content">
+            <h2>Your Grocery List</h2>
+            <div class="grocery-list">
+                <!-- Groceries will be dynamically added here -->
+            </div>
+            <form id="add-grocery-form">
+                <div class="form-group">
+                    <label for="grocery-name">Grocery Name</label>
+                    <input type="text" id="grocery-name" name="grocery-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="grocery-quantity">Quantity</label>
+                    <input type="number" id="grocery-quantity" name="grocery-quantity" min="1" required>
+                </div>
+                <button type="submit">Add Grocery</button>
+            </form>
+        </section>
+    </main>
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 ResQMeal. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

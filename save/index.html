@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ResQMeal</title>
+    <script src="../js/script.js" defer></script>
+    <script src="../js/scanner.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/quagga/dist/quagga.min.js"></script>
+  </head>
+  <body>
+    <h1>Recherche de produit</h1>
+
+    <!-- Champ de saisie pour le code-barres -->
+    <label for="barcode-input">Code-barres :</label>
+    <input type="text" id="barcode-input" placeholder="Entrez le code-barres" />
+
+    <!-- Bouton de recherche -->
+    <button id="search-button">Rechercher</button>
+
+    <!-- Zone pour afficher les informations sur le produit -->
+    <div id="product-info"></div>
+    <div id="interactive" class="viewport"></div>
+    <div id="barcode-result"></div>
+
+    <h1>Ajout de produits via texte</h1>
+
+    <label for="name-input">Nom de l'aliment</label>
+    <input
+      type="text"
+      id="name-input"
+      placeholder="Entrez le nome de l'aliment"
+    />
+    <button id="add-aliment-name">Ajouter</button>
+
+    <div id="ingredients"></div>
+
+    <script>
+      fetch("http://localhost:3000/ingredients")
+        .then((response) => response.json())
+        .then((data) => {
+          document.getElementById("ingredients").innerText =
+            JSON.stringify(data);
+        })
+        .catch((error) => console.error("Erreur:", error));
+    </script>
+  </body>
+</html>

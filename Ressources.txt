@@ -1,0 +1,93 @@
+https://serratus.github.io/quaggaJS/  => bibliothèque JS pour lire les codes barres
+
+
+TODO:
+- permettre à l'utilisateur d'entrer le code barre depuis la page web
+- permettre à l'utilisateur de scanner un produit
+
+- stocker les données de l'utilisateur (MySql, nodeJS)
+- récupérer des recettes
+- frontend
+- proposer recette en fonction des aliments de l'utilisateur
+
+
+GUIDE POUR LES NOOBS
+
+- télécharger node 
+- aller dans le dossier de votre projet sur VSCODE et ouvrir un terminal
+- faire "npm install" dans le terminal si ça marche pas "npm install cors dotenv express mysql2 nodemon"
+- aller sur mysql workbench et copier coller le code suivant dans une nouvelle base de donnée nommée "resqmeal_db":
+CREATE TABLE Ingrédients(
+   id_aliment INT,
+   nom_aliment VARCHAR(50),
+   PRIMARY KEY(id_aliment)
+);
+
+CREATE TABLE Recettes(
+   id_recette INT,
+   nom_recette VARCHAR(50),
+   PRIMARY KEY(id_recette)
+);
+
+CREATE TABLE Contient(
+   id_aliment INT,
+   id_recette INT,
+   PRIMARY KEY(id_aliment, id_recette),
+   FOREIGN KEY(id_aliment) REFERENCES Ingrédients(id_aliment),
+   FOREIGN KEY(id_recette) REFERENCES Recettes(id_recette)
+);
+
+INSERT INTO Ingrédients (id_aliment, nom_aliment) VALUES
+("1", "pomme"), ("2", "poire");
+ALTER TABLE Recettes ADD description_recette text;
+- créer un fichier nommé ".env" et le remplire de la manière suivante:
+# .env file
+DB_HOST=localhost
+DB_USER=root
+DB_PASS=    //Mettre votre mot de passe collé à l'espace
+DB_NAME=resqmeal_db
+- dans votre terminal tappez "npm start"
+- faire golive en bas de votre fenetre si vous avez live server (si vous l'avez pas télécharger le ou sinon lancez votre page en local dans votre navigateur)
+- normalement c'est good vous voyez la pomme et la poire s'afficher en bas de votre page
+
+EXPLICATIONS:
+
+const app = express();
+on créé notre serveur en local
+
+const connection = mysql.createConnection({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASS,
+  database: process.env.DB_NAME,
+});
+on se connecte à notre base de donnée mysql
+
+app.get("/ingredients", (req, res) => {
+  connection.query("SELECT * FROM Ingrédients", (err, rows) => {
+    if (err) {
+      console.error(
+        "Erreur lors de la récupération des données des aliments :",
+        err
+      );
+      res.status(500).send("Erreur lors de la récupération des données");
+      return;
+    }
+    res.send(rows);
+  });
+});
+on récupère nos données sql sous forme de tableaux dans notre API (qu'on a créé avec le code) sur la route http://localhost:3000/Ingrédients
+et on le print le json grâce à la fonction fetch qui nous permets de faire des requêtes depuis le frontend sur notre serveur
+
+fetch("http://localhost:3000/ingredients")
+        .then((response) => response.json())
+        .then((data) => {
+          document.getElementById("ingredients").innerText =
+            JSON.stringify(data);
+        })
+        .catch((error) => console.error("Erreur:", error));
+
+et ça ça permets de vérifier que votre serveur marche bien normalement dans votre terminal y'a marque Server is running at http://localhost:3000
+app.listen(3000, () => {
+  console.log("Server is running at http://localhost:3000");
+});
