@@ -37,8 +37,63 @@ CREATE TABLE Contient(
    FOREIGN KEY(id_recette) REFERENCES Recettes(id_recette)
 );
 
-INSERT INTO Ingrédients (id_aliment, nom_aliment) VALUES
-("1", "pomme"), ("2", "poire");
+-- Insérer les ingrédients
+INSERT INTO Ingrédients (id_aliment, nom_aliment)
+VALUES
+   (1, 'Farine'),
+   (2, 'Sucre'),
+   (3, 'Beurre'),
+   (4, 'Œufs'),
+   (5, 'Lait'),
+   (6, 'Sel'),
+   (7, 'Levure'),
+   (8, 'Pommes'),
+   (9, 'Cannelle'),
+   (10, 'Chocolat'),
+   (11, 'Amandes'),
+   (12, 'Vanille'),
+   (13, 'Noix de coco'),
+   (14, 'Poivre'),
+   (15, 'Oignon');
+
+-- Insérer les recettes
+INSERT INTO Recettes (id_recette, nom_recette)
+VALUES
+   (1, 'Pain aux bananes'),
+   (2, 'Tarte aux pommes'),
+   (3, 'Cookies au chocolat'),
+   (4, 'Quiche lorraine'),
+   (5, 'Gâteau au yaourt'),
+   (6, 'Crêpes'),
+   (7, 'Brownies'),
+   (8, 'Salade César'),
+   (9, 'Risotto aux champignons'),
+   (10, 'Soupe à l\'oignon');
+
+-- Associer les ingrédients aux recettes
+INSERT INTO Contient (id_aliment, id_recette)
+VALUES
+   -- Pain aux bananes
+   (1, 1), (2, 1), (3, 1), (4, 1), (8, 1),
+   -- Tarte aux pommes
+   (1, 2), (2, 2), (3, 2), (8, 2), (9, 2),
+   -- Cookies au chocolat
+   (1, 3), (2, 3), (3, 3), (4, 3), (10, 3),
+   -- Quiche lorraine
+   (1, 4), (4, 4), (5, 4), (6, 4), (15, 4),
+   -- Gâteau au yaourt
+   (1, 5), (2, 5), (3, 5), (4, 5), (11, 5),
+   -- Crêpes
+   (1, 6), (4, 6), (5, 6), (3, 6), (2, 6),
+   -- Brownies
+   (1, 7), (2, 7), (3, 7), (4, 7), (10, 7),
+   -- Salade César
+   (5, 8), (12, 8), (13, 8), (14, 8), (3, 8),
+   -- Risotto aux champignons
+   (1, 9), (11, 9), (5, 9), (15, 9), (14, 9),
+   -- Soupe à l'oignon
+   (15, 10), (5, 10), (3, 10), (7, 10), (14, 10);
+
 ALTER TABLE Recettes ADD description_recette text;
 - créer un fichier nommé ".env" et le remplire de la manière suivante:
 # .env file
