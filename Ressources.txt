@@ -18,14 +18,15 @@ GUIDE POUR LES NOOBS
 - faire "npm install" dans le terminal si ça marche pas "npm install cors dotenv express mysql2 nodemon"
 - aller sur mysql workbench et copier coller le code suivant dans une nouvelle base de donnée nommée "resqmeal_db":
 CREATE TABLE Ingrédients(
-   id_aliment INT,
+   id_aliment INT auto_increment,
    nom_aliment VARCHAR(50),
    PRIMARY KEY(id_aliment)
 );
 
 CREATE TABLE Recettes(
-   id_recette INT,
+   id_recette INT auto_increment,
    nom_recette VARCHAR(50),
+   description_recette text,
    PRIMARY KEY(id_recette)
 );
 
@@ -38,37 +39,40 @@ CREATE TABLE Contient(
 );
 
 -- Insérer les ingrédients
-INSERT INTO Ingrédients (id_aliment, nom_aliment)
+INSERT INTO Ingrédients (nom_aliment)
 VALUES
-   (1, 'Farine'),
-   (2, 'Sucre'),
-   (3, 'Beurre'),
-   (4, 'Œufs'),
-   (5, 'Lait'),
-   (6, 'Sel'),
-   (7, 'Levure'),
-   (8, 'Pommes'),
-   (9, 'Cannelle'),
-   (10, 'Chocolat'),
-   (11, 'Amandes'),
-   (12, 'Vanille'),
-   (13, 'Noix de coco'),
-   (14, 'Poivre'),
-   (15, 'Oignon');
+   ('Farine'),
+   ('Sucre'),
+   ('Beurre'),
+   ('Œufs'),
+   ('Lait'),
+   ('Sel'),
+   ('Levure'),
+   ('Pommes'),
+   ('Cannelle'),
+   ('Chocolat'),
+   ('Amandes'),
+   ('Vanille'),
+   ('Noix de coco'),
+   ('Poivre'),
+   ('Oignon');
 
 -- Insérer les recettes
-INSERT INTO Recettes (id_recette, nom_recette)
+INSERT INTO Recettes (nom_recette)
 VALUES
-   (1, 'Pain aux bananes'),
-   (2, 'Tarte aux pommes'),
-   (3, 'Cookies au chocolat'),
-   (4, 'Quiche lorraine'),
-   (5, 'Gâteau au yaourt'),
-   (6, 'Crêpes'),
-   (7, 'Brownies'),
-   (8, 'Salade César'),
-   (9, 'Risotto aux champignons'),
-   (10, 'Soupe à l\'oignon');
+   ('Pain aux bananes'),
+   ('Tarte aux pommes'),
+   ('Cookies au chocolat'),
+   ('Quiche lorraine'),
+   ('Gâteau au yaourt'),
+   ('Crêpes'),
+   ('Brownies'),
+   ('Salade César'),
+   ('Risotto aux champignons'),
+   ('Soupe à l\'oignon');
+
+SELECT * FROM Recettes;
+SELECT * FROM Ingrédients;
 
 -- Associer les ingrédients aux recettes
 INSERT INTO Contient (id_aliment, id_recette)
@@ -93,8 +97,9 @@ VALUES
    (1, 9), (11, 9), (5, 9), (15, 9), (14, 9),
    -- Soupe à l'oignon
    (15, 10), (5, 10), (3, 10), (7, 10), (14, 10);
+   
 
-ALTER TABLE Recettes ADD description_recette text;
+SELECT * FROM Contient;
 - créer un fichier nommé ".env" et le remplire de la manière suivante:
 # .env file
 DB_HOST=localhost
