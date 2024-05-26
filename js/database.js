@@ -42,3 +42,20 @@ app.get("/ingredients", (req, res) => {
 app.listen(3000, () => {
   console.log("Server is running at http://localhost:3000");
 });
+
+app.get("/search", (req, res) => {
+  const ingredients = req.query.ingredients.split(",");
+  connection.query(
+    "SELECT DISTINCT Recettes.* FROM Recettes JOIN Contient ON Recettes.id_recette = Contient.id_recette JOIN Ingrédients ON Contient.id_aliment = Ingrédients.id_aliment WHERE Ingrédients.nom_aliment IN (?)",
+    [ingredients],
+    (err, rows) => {
+      if (err) {
+        console.error("Erreur lors de la récupération des recettes :", err);
+        res.status(500).send("Erreur lors de la récupération des recettes");
+        return;
+      }
+      console.log(rows); // Affiche le résultat de la requête dans la console
+      res.send(rows);
+    }
+  );
+});
