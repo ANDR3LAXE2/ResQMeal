@@ -29,28 +29,24 @@
             <p>Create your own recipes and save them for later use. Browse through your saved recipes for inspiration and meal planning.</p>
         </section>
         <section class="create-recipe">
-            <h2>Create a New Recipe</h2>
-            <form id="create-recipe-form">
-                <div class="form-group">
-                    <label for="recipe-name">Recipe Name</label>
-                    <input type="text" id="recipe-name" name="recipe-name" required>
-                </div>
-                <div class="form-group">
-                    <label for="recipe-ingredients">Ingredients</label>
-                    <textarea id="recipe-ingredients" name="recipe-ingredients" rows="5" required></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="recipe-steps">Steps</label>
-                    <textarea id="recipe-steps" name="recipe-steps" rows="5" required></textarea>
-                </div>
-                <button type="submit">Save Recipe</button>
+            <h1>Créer une Recette</h1>
+            <form id="recipeForm">
+                <label for="recipeName">Nom de la recette :</label>
+                <input type="text" id="recipeName" name="recipeName" required>
+        
+                <label for="ingredientCount">Nombre d'ingrédients :</label>
+                <input type="number" id="ingredientCount" name="ingredientCount" min="1" required>
+        
+                <button type="button" onclick="generateIngredientFields()">Générer les champs d'ingrédients</button>
+                
+                <div id="ingredientFields"></div>
+        
+                <label for="description">Description :</label>
+                <textarea id="description" name="description" rows="5" required></textarea>
+        
+                <button type="submit">Soumettre la recette</button>
+                <button type="reset" onclick="resetIngredientFields()">Réinitialiser</button>
             </form>
-        </section>
-        <section class="saved-recipes">
-            <h2>Saved Recipes</h2>
-            <div class="recipe-list">
-                <!-- Recipes will be dynamically added here -->
-            </div>
         </section>
     </main>
     <footer>
