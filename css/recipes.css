@@ -51,7 +51,7 @@ form {
     font-size: 16px;
 }
 
-button[type="submit"] {
+button[type="submit"], button[type="reset"], button[type="button"]{
     padding: 10px 20px;
     background-color: #354F52;
     color: white;
@@ -61,7 +61,7 @@ button[type="submit"] {
     font-size: 16px;
 }
 
-button[type="submit"]:hover {
+button[type="submit"]:hover, button[type="reset"]:hover, button[type="button"]:hover{
     background-color: #8db995;
 }
 
