@@ -1,67 +1,59 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const recipeForm = document.getElementById('create-recipe-form');
-    const recipeList = document.querySelector('.recipe-list');
+document.addEventListener("DOMContentLoaded", () => {
+  const recipeForm = document.getElementById("recipeForm");
+  recipeForm.addEventListener("submit", function (event) {
+    event.preventDefault();
+    const name = document.getElementById("recipeName").value;
+    const description = document.getElementById("description").value;
+    const ingredientInputs = document.querySelectorAll('[name^="ingredient"]');
+    const ingredients = Array.from(ingredientInputs).map(
+      (input) => input.value
+    );
+    console.log(name, description, ingredients);
 
-    // Load recipes from localStorage
-    loadRecipes();
-
-    recipeForm.addEventListener('submit', function(event) {
-        event.preventDefault();
-        const name = document.getElementById('recipe-name').value;
-        const ingredients = document.getElementById('recipe-ingredients').value;
-        const steps = document.getElementById('recipe-steps').value;
-
-        if (name && ingredients && steps) {
-            addRecipe(name, ingredients, steps);
-            saveRecipe(name, ingredients, steps);
-            recipeForm.reset();
-        }
-    });
-
-    function loadRecipes() {
-        const recipes = JSON.parse(localStorage.getItem('recipes')) || [];
-        recipes.forEach(recipe => {
-            addRecipe(recipe.name, recipe.ingredients, recipe.steps);
+    if (name && ingredients && description) {
+      fetch("http://localhost:3000/submitrecipe", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name, ingredients, description }),
+      })
+        .then((response) => response.json())
+        .then((data) => console.log(data))
+        .catch((error) => {
+          console.error("Error:", error);
         });
+
+      recipeForm.reset();
+      resetIngredientFields();
     }
+  });
 
-    function saveRecipe(name, ingredients, steps) {
-        const recipes = JSON.parse(localStorage.getItem('recipes')) || [];
-        recipes.push({ name, ingredients, steps });
-        localStorage.setItem('recipes', JSON.stringify(recipes));
+  window.generateIngredientFields = function () {
+    const ingredientCount = document.getElementById("ingredientCount").value;
+    const ingredientFields = document.getElementById("ingredientFields");
+    ingredientFields.innerHTML = ""; // Clear previous fields
+
+    for (let i = 1; i <= ingredientCount; i++) {
+      const div = document.createElement("div");
+      div.className = "ingredient-form";
+
+      const ingredientLabel = document.createElement("label");
+      ingredientLabel.textContent = `Ingrédient ${i}: `;
+      div.appendChild(ingredientLabel);
+
+      const ingredientInput = document.createElement("input");
+      ingredientInput.type = "text";
+      ingredientInput.name = `ingredient${i}`;
+      ingredientInput.placeholder = "Nom de l'ingrédient";
+      ingredientInput.required = true;
+      div.appendChild(ingredientInput);
+
+      ingredientFields.appendChild(div);
     }
+  };
 
-    function addRecipe(name, ingredients, steps) {
-        const recipeItem = document.createElement('div');
-        recipeItem.className = 'recipe-item';
-
-        const recipeName = document.createElement('h3');
-        recipeName.textContent = name;
-
-        const recipeIngredients = document.createElement('p');
-        recipeIngredients.innerHTML = `<strong>Ingredients:</strong> ${ingredients}`;
-
-        const recipeSteps = document.createElement('p');
-        recipeSteps.innerHTML = `<strong>Steps:</strong> ${steps}`;
-
-        const deleteButton = document.createElement('button');
-        deleteButton.textContent = 'Delete';
-        deleteButton.className = 'delete-button';
-        deleteButton.onclick = function() {
-            recipeList.removeChild(recipeItem);
-            removeRecipe(name);
-        };
-
-        recipeItem.appendChild(recipeName);
-        recipeItem.appendChild(recipeIngredients);
-        recipeItem.appendChild(recipeSteps);
-        recipeItem.appendChild(deleteButton);
-        recipeList.appendChild(recipeItem);
-    }
-
-    function removeRecipe(name) {
-        let recipes = JSON.parse(localStorage.getItem('recipes')) || [];
-        recipes = recipes.filter(recipe => recipe.name !== name);
-        localStorage.setItem('recipes', JSON.stringify(recipes));
-    }
+  window.resetIngredientFields = function () {
+    document.getElementById("ingredientFields").innerHTML = "";
+  };
 });
