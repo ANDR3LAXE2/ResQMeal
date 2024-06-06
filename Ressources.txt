@@ -41,35 +41,35 @@ CREATE TABLE Contient(
 -- Insérer les ingrédients
 INSERT INTO Ingrédients (nom_aliment)
 VALUES
-   ('Farine'),
-   ('Sucre'),
-   ('Beurre'),
-   ('Œufs'),
-   ('Lait'),
-   ('Sel'),
-   ('Levure'),
-   ('Pommes'),
-   ('Cannelle'),
-   ('Chocolat'),
-   ('Amandes'),
-   ('Vanille'),
-   ('Noix de coco'),
-   ('Poivre'),
-   ('Oignon');
+   ('Flour'),
+   ('Sugar'),
+   ('Butter'),
+   ('Eggs'),
+   ('Milk'),
+   ('Salt'),
+   ('Yeast'),
+   ('Apples'),
+   ('Cinnamon'),
+   ('Chocolatee'),
+   ('Almonds'),
+   ('Vanilla'),
+   ('Coconut'),
+   ('Pepper'),
+   ('Onion');
 
 -- Insérer les recettes
-INSERT INTO Recettes (nom_recette)
+INSERT INTO Recettes (nom_recette, description_recette)
 VALUES
-   ('Pain aux bananes'),
-   ('Tarte aux pommes'),
-   ('Cookies au chocolat'),
-   ('Quiche lorraine'),
-   ('Gâteau au yaourt'),
-   ('Crêpes'),
-   ('Brownies'),
-   ('Salade César'),
-   ('Risotto aux champignons'),
-   ('Soupe à l\'oignon');
+   ('Banana Bread', 'A moist, sweet bread made with ripe bananas, flour, sugar, and eggs. Often enjoyed as a breakfast item or snack, it can include nuts or chocolate chips for added flavor.'),
+   ('Apple Pie', 'A classic dessert featuring a buttery crust filled with a spiced mixture of sliced apples, sugar, and cinnamon. It’s typically baked until golden brown and often served with vanilla ice cream.'),
+   ('Chocolate Chip Cookies', 'Soft or crispy cookies loaded with chocolate chips. Made from a dough of flour, sugar, butter, and eggs, they’re a favorite treat for their sweet, chocolatey goodness.'),
+   ('Quiche Lorraine', "A savory French tart filled with a rich custard made from eggs and cream, studded with bacon or lardons, and Gruyère cheese. It's baked in a flaky pastry crust and enjoyed warm or at room temperature."),
+   ('Yogurt Cake', 'A simple and light French cake made with yogurt, which keeps it moist. The basic ingredients include yogurt, flour, sugar, and eggs, making it easy to prepare. It’s often flavored with vanilla or lemon.'),
+   ('Crêpes', 'Thin, delicate French pancakes made from a simple batter of flour, milk, and eggs. They can be filled with sweet or savory ingredients like Nutella, ham, or cheese, and are rolled or folded before serving.'),
+   ('Brownies', 'Rich, dense chocolate squares that are fudgy or cakey, depending on the recipe. Made with cocoa powder or melted chocolate, sugar, and butter, they are a favorite dessert or snack.'),
+   ('Caesar Salad', 'A popular salad consisting of romaine lettuce, croutons, and Parmesan cheese, all tossed in a creamy Caesar dressing that includes anchovies, garlic, lemon juice, and olive oil. Often topped with grilled chicken.'),
+   ('Mushroom Risotto', 'A creamy Italian rice dish made with Arborio rice, slowly cooked in broth until tender. It’s enriched with sautéed mushrooms, onions, garlic, white wine, and Parmesan cheese, creating a rich, comforting meal.'),
+   ('French Onion Soup', 'A hearty soup made by slowly caramelizing onions, then simmering them in beef broth and white wine. It’s typically topped with toasted bread and melted Gruyère or Swiss cheese, creating a satisfying and flavorful dish.');
 
 SELECT * FROM Recettes;
 SELECT * FROM Ingrédients;
@@ -99,7 +99,7 @@ VALUES
    (15, 10), (5, 10), (3, 10), (7, 10), (14, 10);
    
 
-SELECT * FROM Contient;
+SELECT * FROM Recettes;
 - créer un fichier nommé ".env" et le remplire de la manière suivante:
 # .env file
 DB_HOST=localhost

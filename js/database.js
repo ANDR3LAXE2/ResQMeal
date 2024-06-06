@@ -5,9 +5,6 @@ const app = express();
 const cors = require("cors");
 app.use(cors());
 
-app.use(express.json()); // Pour parser le JSON du body des requêtes
-app.use(express.urlencoded({ extended: true }));
-
 // Serve static files from the "public" directory
 app.use(express.static(path.join(__dirname, "Projet_transverse")));
 
@@ -42,6 +39,10 @@ app.get("/ingredients", (req, res) => {
   });
 });
 
+app.listen(3000, () => {
+  console.log("Server is running at http://localhost:3000");
+});
+
 app.get("/search", (req, res) => {
   const ingredients = req.query.ingredients.split(",");
   connection.query(
@@ -57,88 +58,4 @@ app.get("/search", (req, res) => {
       res.send(rows);
     }
   );
-});
-
-app.post("/submitrecipe", (req, res) => {
-  const { name, ingredients, description } = req.body;
-
-  connection.beginTransaction((err) => {
-    if (err) {
-      console.error("Erreur lors de l'initialisation de la transaction :", err);
-      res.status(500).send("Erreur lors de l'initialisation de la transaction");
-      return;
-    }
-
-    connection.query(
-      "INSERT INTO Recettes (nom_recette, description_recette) VALUES (?, ?)",
-      [name, description],
-      (err, result) => {
-        if (err) {
-          console.error("Erreur lors de l'insertion de la recette :", err);
-          return connection.rollback(() => {
-            res.status(500).send("Erreur lors de l'insertion de la recette");
-          });
-        }
-
-        const recipeId = result.insertId;
-        console.log("Recette insérée avec succès, ID:", recipeId);
-
-        let ingredientPromises = ingredients.map((ingredient) => {
-          return new Promise((resolve, reject) => {
-            connection.query(
-              "INSERT INTO Ingrédients (nom_aliment) VALUES (?) ON DUPLICATE KEY UPDATE id_aliment=LAST_INSERT_ID(id_aliment)",
-              [ingredient],
-              (err, result) => {
-                if (err) {
-                  return reject(err);
-                }
-                resolve(result.insertId);
-              }
-            );
-          });
-        });
-
-        Promise.all(ingredientPromises)
-          .then((ingredientIds) => {
-            let containPromises = ingredientIds.map((ingredientId) => {
-              return new Promise((resolve, reject) => {
-                connection.query(
-                  "INSERT INTO Contient (id_recette, id_aliment) VALUES (?, ?)",
-                  [recipeId, ingredientId],
-                  (err, result) => {
-                    if (err) {
-                      return reject(err);
-                    }
-                    resolve(result);
-                  }
-                );
-              });
-            });
-
-            return Promise.all(containPromises);
-          })
-          .then(() => {
-            connection.commit((err) => {
-              if (err) {
-                console.error("Erreur lors de la validation de la transaction :", err);
-                return connection.rollback(() => {
-                  res.status(500).send("Erreur lors de la validation de la transaction");
-                });
-              }
-              res.json({ message: "Recette insérée avec succès" });
-            });
-          })
-          .catch((err) => {
-            console.error("Erreur lors de l'insertion des ingrédients ou des relations :", err);
-            connection.rollback(() => {
-              res.status(500).send("Erreur lors de l'insertion des ingrédients ou des relations");
-            });
-          });
-      }
-    );
-  });
-});
-
-app.listen(3000, () => {
-  console.log("Server is running at http://localhost:3000");
 });

@@ -97,6 +97,30 @@ button[type="submit"]:hover, button[type="button"]:hover {
 .delete-button:hover {
     background-color: #c0392b;
 }
+.recipe-item {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    position: relative;
+}
+
+.recipe-item:hover {
+    background-color: #f0f0f0;
+}
+
+.recipe-details {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    z-index: 10;
+}
 
 footer {
     background-color: #354F52;

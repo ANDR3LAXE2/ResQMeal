@@ -52,66 +52,87 @@ document.addEventListener('DOMContentLoaded', () => {
         ingredients = ingredients.filter(ingredient => ingredient.name !== name);
         localStorage.setItem('ingredients', JSON.stringify(ingredients));
     }
-    // Sélectionnez le bouton "Search for recipes"
+
+    // Select the "Search for recipes" button
     let searchButton = document.querySelector('button[type="button"]');
 
-    // Attachez un gestionnaire d'événements au bouton
+    // Attach an event listener to the button
     searchButton.addEventListener('click', function() {
-        // Récupérez la liste des ingrédients
+        // Get the list of ingredients
         let ingredients = getIngredients();
 
-        // Créez la requête au serveur
-        let url = 'http://localhost:3000/search?' + new URLSearchParams({ingredients: ingredients});
+        // Create the server request
+        let url = 'http://localhost:3000/search?' + new URLSearchParams({ ingredients: ingredients });
 
-        // Faites la requête au serveur
+        // Make the server request
         fetch(url)
             .then(response => response.json())
             .then(data => {
-                // Affichez le résultat de la requête dans la console
+                // Display the result of the request
                 console.log(data);
 
-                // Traitez la réponse du serveur
+                // Handle the server response
                 displayRecipes(data);
             });
     });
 
-    // Cette fonction doit retourner la liste des ingrédients
+    // This function should return the list of ingredients
     function getIngredients() {
-        // Récupérez les ingrédients du localStorage
+        // Get the ingredients from localStorage
         const ingredients = JSON.parse(localStorage.getItem('ingredients')) || [];
 
-        // Créez un tableau pour stocker les noms des ingrédients
+        // Create an array to store the ingredient names
         let ingredientNames = [];
 
-        // Parcourez chaque ingrédient et ajoutez son nom au tableau
+        // Iterate through each ingredient and add its name to the array
         ingredients.forEach(ingredient => {
             ingredientNames.push(ingredient.name);
         });
 
-        // Retournez le tableau des noms d'ingrédients
+        // Return the array of ingredient names
         return ingredientNames;
     }
 
-    // Cette fonction affiche les recettes
+    // This function displays the recipes
     function displayRecipes(recipes) {
-        // Sélectionnez la liste de recettes
-        let recipeLists = document.getElementsByClassName('recipe-list');
-    
-        // Parcourez chaque liste de recettes
-        for(let i = 0; i < recipeLists.length; i++) {
-            // Assurez-vous que la liste de recettes est vide
-            recipeLists[i].innerHTML = '';
-    
-            // Parcourez chaque recette
-            recipes.forEach(recipe => {
-                // Créez un élément div pour la recette
-                let recipeItem = document.createElement('div');
-                recipeItem.className = 'recipe-item';
-                recipeItem.textContent = recipe.nom_recette;
-    
-                // Ajoutez l'élément de recette à la liste de recettes
-                recipeLists[i].appendChild(recipeItem.cloneNode(true));
+        // Select the recipe list
+        let recipeLists = document.querySelector('.recipe-list');
+
+        // Ensure the recipe list is empty
+        recipeLists.innerHTML = '';
+
+        // Iterate through each recipe
+        recipes.forEach(recipe => {
+            // Create a div element for the recipe
+            let recipeItem = document.createElement('div');
+            recipeItem.className = 'recipe-item';
+            recipeItem.textContent = recipe.nom_recette;
+
+            // Add a hover event to show ingredients
+            recipeItem.addEventListener('mouseenter', () => {
+                showRecipeDetails(recipeItem, recipe);
             });
+
+            recipeItem.addEventListener('mouseleave', () => {
+                hideRecipeDetails(recipeItem);
+            });
+
+            // Add the recipe element to the recipe list
+            recipeLists.appendChild(recipeItem);
+        });
+    }
+
+    function showRecipeDetails(recipeItem, recipe) {
+        let details = document.createElement('div');
+        details.className = 'recipe-details';
+        details.innerHTML = `<strong>Ingredients:</strong><p>${recipe.description_recette}</p>`;
+        recipeItem.appendChild(details);
+    }
+
+    function hideRecipeDetails(recipeItem) {
+        const details = recipeItem.querySelector('.recipe-details');
+        if (details) {
+            recipeItem.removeChild(details);
         }
     }
 });
